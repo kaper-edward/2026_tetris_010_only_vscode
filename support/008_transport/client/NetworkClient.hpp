@@ -46,8 +46,12 @@ public:
     NetworkClient(NetworkClient&&) noexcept = default;
     NetworkClient& operator=(NetworkClient&&) noexcept = default;
 
+    static void setDefaultSection(std::string section);
+    static const std::string& defaultSection();
+
     void connectAs(const std::string& name);
     void connectAs(const std::string& name, const std::string& features);
+    void connectAs(const std::string& name, const std::string& features, const std::string& section);
     void queueVersus();
     void queueSolo();
     void sendAction(tetris::protocol::GameAction action);

@@ -47,6 +47,7 @@ struct ClientMessage {
     int version = 1;
     std::string name;
     std::string features;
+    std::string section;
     std::string mode = "versus";
     MatchId match = 0;
     PlayerId player = 0;

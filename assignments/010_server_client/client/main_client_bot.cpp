@@ -18,6 +18,7 @@ struct Args {
     std::string host = "127.0.0.1";
     unsigned short port = 27015;
     std::string name = "bot";
+    std::string section = "062";
     int timeout_ms = 15000;
     std::string mode = "multi";
 };
@@ -32,6 +33,8 @@ Args parse_args(int argc, char** argv) {
             args.port = static_cast<unsigned short>(std::stoi(argv[++i]));
         } else if (key == "--name" && i + 1 < argc) {
             args.name = argv[++i];
+        } else if (key == "--section" && i + 1 < argc) {
+            args.section = argv[++i];
         } else if (key == "--timeout-ms" && i + 1 < argc) {
             args.timeout_ms = std::stoi(argv[++i]);
         } else if (key == "--mode" && i + 1 < argc) {
@@ -58,7 +61,7 @@ int main(int argc, char** argv) {
     }
 
     NetworkClient client(std::move(transport));
-    client.connectAs(args.name);
+    client.connectAs(args.name, "", args.section);
     if (args.mode == "solo") {
         client.queueSolo();
     } else {

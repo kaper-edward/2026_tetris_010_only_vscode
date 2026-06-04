@@ -20,6 +20,7 @@ struct Args {
     std::string host = "127.0.0.1";
     unsigned short port = 27015;
     std::string name = "player";
+    std::string section = "062";
     std::string font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf";
     int connect_timeout_ms = 2000;
     std::string mode = "multi";
@@ -35,6 +36,8 @@ Args parse_args(int argc, char** argv) {
             args.port = static_cast<unsigned short>(std::stoi(argv[++i]));
         } else if (key == "--name" && i + 1 < argc) {
             args.name = argv[++i];
+        } else if (key == "--section" && i + 1 < argc) {
+            args.section = argv[++i];
         } else if (key == "--font" && i + 1 < argc) {
             args.font_path = argv[++i];
         } else if (key == "--connect-timeout-ms" && i + 1 < argc) {
@@ -56,6 +59,8 @@ int main(int argc, char** argv) {
         std::cerr << "invalid --mode: " << args.mode << " (expected solo or multi)\n";
         return 2;
     }
+
+    NetworkClient::setDefaultSection(args.section);
 
     sf::RenderWindow window(sf::VideoMode({760, 700}), "2026 Tetris Network Client");
     window.setFramerateLimit(60);

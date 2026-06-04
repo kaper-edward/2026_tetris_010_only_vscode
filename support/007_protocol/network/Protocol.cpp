@@ -254,6 +254,9 @@ std::string serialize_client_message(const ClientMessage& message) {
     switch (message.type) {
         case ClientMessageType::Hello:
             out << "HELLO version=" << message.version << " name=" << message.name;
+            if (!message.section.empty()) {
+                out << " section=" << message.section;
+            }
             if (!message.features.empty()) {
                 out << " features=" << message.features;
             }

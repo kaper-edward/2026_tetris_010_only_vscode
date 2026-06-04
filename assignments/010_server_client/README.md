@@ -20,22 +20,31 @@ The bot is a scripted smoke-test helper. Its behavior is factored through
 does not inspect the board to choose placements.
 
 Against the classroom server you usually do not need this local bot. Both clients
-take `--mode solo|multi` (default `multi`):
+take `--mode solo|multi` (default `multi`) and `--section 061|062` (default
+`062`):
 
 - `--mode solo` sends `QUEUE mode=solo`; the server attaches a server-side bot
   opponent immediately.
 - `--mode multi` sends `QUEUE mode=versus`; the server matches a human first and
   autofills a server bot after ~5s (classroom config) if none arrives.
+- `--section 061|062` selects the Top20 classroom bucket. Section `062` is the
+  default; section `061` students must pass `--section 061`.
 
 When the opponent is a server bot its name shows as `cpu_<client_id>`. The CLI
 flag `multi` maps to the wire word `versus`, so the client does not accept
 `--mode versus`. See `2026_tetris_server/docs/student_client_guide.md` for the
 canonical connection guide.
 
-010 clients use the compatibility handshake:
+010 clients use the compatibility handshake when no section is configured:
 
 ```text
 HELLO version=1 name=<name>
+```
+
+The provided classroom executables configure a section and send:
+
+```text
+HELLO version=2 name=<name> section=<061|062>
 ```
 
 This target builds SFML Network, Window, and Graphics. The CMake configuration

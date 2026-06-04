@@ -31,7 +31,8 @@ bool optional_token_valid(const std::string& value) {
 bool client_message_tokens_valid(const ClientMessage& message) {
     switch (message.type) {
         case ClientMessageType::Hello:
-            return is_valid_token_value(message.name) && optional_token_valid(message.features);
+            return is_valid_token_value(message.name) && optional_token_valid(message.features) &&
+                   optional_token_valid(message.section);
         case ClientMessageType::Queue:
             return is_valid_token_value(message.mode);
         case ClientMessageType::Quit:
@@ -44,23 +45,41 @@ bool client_message_tokens_valid(const ClientMessage& message) {
     return false;
 }
 
+std::string& default_section_storage() {
+    static std::string section;
+    return section;
+}
+
 }  // namespace
 
 NetworkClient::NetworkClient(std::unique_ptr<ITransport> transport) : transport_(std::move(transport)) {}
 
+void NetworkClient::setDefaultSection(std::string section) {
+    default_section_storage() = std::move(section);
+}
+
+const std::string& NetworkClient::defaultSection() {
+    return default_section_storage();
+}
+
 void NetworkClient::connectAs(const std::string& name) {
-    connectAs(name, "");
+    connectAs(name, "", defaultSection());
 }
 
 void NetworkClient::connectAs(const std::string& name, const std::string& features) {
+    connectAs(name, features, defaultSection());
+}
+
+void NetworkClient::connectAs(const std::string& name, const std::string& features, const std::string& section) {
     if (is_terminal_phase(phase_)) {
         return;
     }
     ClientMessage message;
     message.type = ClientMessageType::Hello;
-    message.version = features.empty() ? 1 : 2;
+    message.version = (features.empty() && section.empty()) ? 1 : 2;
     message.name = name;
     message.features = features;
+    message.section = section;
     if (!send(message)) {
         return;
     }
