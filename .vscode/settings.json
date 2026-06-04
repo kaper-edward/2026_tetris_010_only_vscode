@@ -1,0 +1,30 @@
+{
+  "cmake.sourceDirectory": "${workspaceFolder}",
+  "cmake.useCMakePresets": "always",
+  "cmake.parallelJobs": 4,
+  "cmake.configureOnOpen": true,
+
+  "C_Cpp.default.cppStandard": "c++23",
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.quickSuggestions": { "other": true, "comments": false, "strings": false }
+  },
+
+  "files.associations": { "*.tpp": "cpp" },
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.watcherExclude": {
+    "**/build/**": true,
+    "**/build-*/**": true
+  },
+  "files.exclude": {
+    "**/build": true,
+    "**/build-*": true,
+    "**/.cache": true
+  }
+}

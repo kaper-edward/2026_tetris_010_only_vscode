@@ -1,0 +1,53 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "CMake: configure (default)",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--preset", "default"],
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "CMake: configure (Windows MSYS2)",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--preset", "default-windows-msys2"],
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "CMake: build 010 clients",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--build", "build/default", "--parallel"],
+      "problemMatcher": ["$gcc"],
+      "group": { "kind": "build", "isDefault": true }
+    },
+    {
+      "label": "CMake: build 010 bot",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--build", "build/default", "--target", "tetris_client_bot", "--parallel"],
+      "problemMatcher": ["$gcc"],
+      "group": "build"
+    },
+    {
+      "label": "CMake: build 010 SFML client",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--build", "build/default", "--target", "tetris010_sfml_client", "--parallel"],
+      "problemMatcher": ["$gcc"],
+      "group": "build"
+    },
+    {
+      "label": "Run build smoke test",
+      "type": "shell",
+      "command": "bash",
+      "args": ["scripts/self_test.sh"],
+      "problemMatcher": [],
+      "group": "test"
+    }
+  ]
+}

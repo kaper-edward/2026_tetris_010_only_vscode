@@ -1,0 +1,44 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": { "major": 3, "minor": 28, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "_base",
+      "hidden": true,
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_ASSIGNMENT_TESTS": "OFF",
+        "BUILD_SFML_NETWORK_CLIENT": "ON"
+      }
+    },
+    {
+      "name": "default",
+      "displayName": "010 SFML Network client",
+      "inherits": "_base"
+    },
+    {
+      "name": "default-windows-msys2",
+      "displayName": "010 SFML Network client (Windows MSYS2 UCRT64)",
+      "inherits": "_base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "C:/msys64/ucrt64/bin/gcc.exe",
+        "CMAKE_CXX_COMPILER": "C:/msys64/ucrt64/bin/g++.exe"
+      },
+      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows" }
+    },
+    {
+      "name": "sfml-sdk",
+      "displayName": "010 client using local SFML_ROOT SDK",
+      "inherits": "default",
+      "cacheVariables": {
+        "CMAKE_PREFIX_PATH": "$env{SFML_ROOT}"
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "default", "configurePreset": "default" },
+    { "name": "default-windows-msys2", "configurePreset": "default-windows-msys2" },
+    { "name": "sfml-sdk", "configurePreset": "sfml-sdk" }
+  ]
+}
