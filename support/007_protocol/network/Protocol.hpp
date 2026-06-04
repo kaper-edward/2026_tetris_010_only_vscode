@@ -49,6 +49,7 @@ struct ClientMessage {
     std::string features;
     std::string section;
     std::string mode = "versus";
+    int ai_level = 0;
     MatchId match = 0;
     PlayerId player = 0;
     Tick tick = 0;

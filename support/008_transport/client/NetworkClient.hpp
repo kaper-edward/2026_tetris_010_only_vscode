@@ -48,12 +48,16 @@ public:
 
     static void setDefaultSection(std::string section);
     static const std::string& defaultSection();
+    static void setDefaultAiLevel(int ai_level);
+    static int defaultAiLevel();
 
     void connectAs(const std::string& name);
     void connectAs(const std::string& name, const std::string& features);
     void connectAs(const std::string& name, const std::string& features, const std::string& section);
     void queueVersus();
+    void queueVersus(int ai_level);
     void queueSolo();
+    void queueSolo(int ai_level);
     void sendAction(tetris::protocol::GameAction action);
     void quit();
     void poll();

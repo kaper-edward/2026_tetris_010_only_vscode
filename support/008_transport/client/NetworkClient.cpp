@@ -50,6 +50,15 @@ std::string& default_section_storage() {
     return section;
 }
 
+int& default_ai_level_storage() {
+    static int ai_level = 0;
+    return ai_level;
+}
+
+int normalized_ai_level(int ai_level) noexcept {
+    return ai_level >= 1 && ai_level <= 3 ? ai_level : 0;
+}
+
 }  // namespace
 
 NetworkClient::NetworkClient(std::unique_ptr<ITransport> transport) : transport_(std::move(transport)) {}
@@ -60,6 +69,14 @@ void NetworkClient::setDefaultSection(std::string section) {
 
 const std::string& NetworkClient::defaultSection() {
     return default_section_storage();
+}
+
+void NetworkClient::setDefaultAiLevel(int ai_level) {
+    default_ai_level_storage() = normalized_ai_level(ai_level);
+}
+
+int NetworkClient::defaultAiLevel() {
+    return default_ai_level_storage();
 }
 
 void NetworkClient::connectAs(const std::string& name) {
@@ -88,12 +105,17 @@ void NetworkClient::connectAs(const std::string& name, const std::string& featur
 }
 
 void NetworkClient::queueVersus() {
+    queueVersus(defaultAiLevel());
+}
+
+void NetworkClient::queueVersus(int ai_level) {
     if (is_terminal_phase(phase_)) {
         return;
     }
     ClientMessage message;
     message.type = ClientMessageType::Queue;
     message.mode = "versus";
+    message.ai_level = normalized_ai_level(ai_level);
     if (!send(message)) {
         return;
     }
@@ -103,12 +125,17 @@ void NetworkClient::queueVersus() {
 }
 
 void NetworkClient::queueSolo() {
+    queueSolo(defaultAiLevel());
+}
+
+void NetworkClient::queueSolo(int ai_level) {
     if (is_terminal_phase(phase_)) {
         return;
     }
     ClientMessage message;
     message.type = ClientMessageType::Queue;
     message.mode = "solo";
+    message.ai_level = normalized_ai_level(ai_level);
     if (!send(message)) {
         return;
     }

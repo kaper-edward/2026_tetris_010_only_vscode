@@ -18,10 +18,11 @@ bash scripts/self_test.sh
   --port 27015 \
   --name bot010 \
   --section 062 \
+  --ai-level 1 \
   --timeout-ms 15000
 ```
 
-`061` 분반은 `--section 061`, `062` 분반은 `--section 062`로 실행합니다. `--section`을 생략하면 서버 기준 기본 분반인 `062`로 처리됩니다.
+`061` 분반은 `--section 061`, `062` 분반은 `--section 062`로 실행합니다. `--section`을 생략하면 서버 기준 기본 분반인 `062`로 처리됩니다. server bot 난이도는 `--ai-level 1|2|3`으로 선택하고, 생략하면 Lv1입니다.
 
 ## 질문 채널
 

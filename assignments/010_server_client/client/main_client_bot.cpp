@@ -19,6 +19,7 @@ struct Args {
     unsigned short port = 27015;
     std::string name = "bot";
     std::string section = "062";
+    int ai_level = 0;
     int timeout_ms = 15000;
     std::string mode = "multi";
 };
@@ -35,6 +36,8 @@ Args parse_args(int argc, char** argv) {
             args.name = argv[++i];
         } else if (key == "--section" && i + 1 < argc) {
             args.section = argv[++i];
+        } else if (key == "--ai-level" && i + 1 < argc) {
+            args.ai_level = std::stoi(argv[++i]);
         } else if (key == "--timeout-ms" && i + 1 < argc) {
             args.timeout_ms = std::stoi(argv[++i]);
         } else if (key == "--mode" && i + 1 < argc) {
@@ -54,6 +57,10 @@ int main(int argc, char** argv) {
         std::cerr << "invalid --mode: " << args.mode << " (expected solo or multi)\n";
         return 2;
     }
+    if (args.ai_level < 0 || args.ai_level > 3) {
+        std::cerr << "invalid --ai-level: " << args.ai_level << " (expected 1..3)\n";
+        return 2;
+    }
     auto transport = std::make_unique<SfmlTcpTransport>();
     if (!transport->connect(args.host, args.port, 2000)) {
         std::cout << "connected=0\n";
@@ -63,9 +70,9 @@ int main(int argc, char** argv) {
     NetworkClient client(std::move(transport));
     client.connectAs(args.name, "", args.section);
     if (args.mode == "solo") {
-        client.queueSolo();
+        client.queueSolo(args.ai_level);
     } else {
-        client.queueVersus();
+        client.queueVersus(args.ai_level);
     }
 
     const bool no_timeout = args.timeout_ms <= 0;

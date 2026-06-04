@@ -31,7 +31,7 @@ build/default/assignments/010_server_client/tetris010_sfml_client
 
 `tetris_client_bot`은 TODO 스텁과 무관하게 SFML Network 연결, WELCOME, 매칭, snapshot 수신을 확인하는 용도입니다.
 
-수업 서버는 Top20을 분반별로 집계합니다. `062` 분반은 기본값이므로 생략해도 되지만, 명령에 명시하는 것을 권장합니다. `061` 분반 학생은 반드시 `--section 061`을 붙여야 합니다.
+수업 서버는 Top20을 분반별로 집계합니다. `062` 분반은 기본값이므로 생략해도 되지만, 명령에 명시하는 것을 권장합니다. `061` 분반 학생은 반드시 `--section 061`을 붙여야 합니다. server bot 난이도는 `--ai-level 1|2|3`으로 선택하고, 생략하면 Lv1입니다.
 
 ```bash
 ./build/default/assignments/010_server_client/tetris_client_bot \
@@ -39,6 +39,7 @@ build/default/assignments/010_server_client/tetris010_sfml_client
   --port 27015 \
   --name bot010 \
   --section 062 \
+  --ai-level 1 \
   --timeout-ms 15000
 ```
 
@@ -50,6 +51,7 @@ build/default/assignments/010_server_client/tetris010_sfml_client
   --port 27015 \
   --name bot010 \
   --section 062 \
+  --ai-level 1 \
   --timeout-ms 0
 ```
 
@@ -63,6 +65,7 @@ build/default/assignments/010_server_client/tetris010_sfml_client
   --port 27015 \
   --name student010 \
   --section 062 \
+  --ai-level 2 \
   --mode solo
 ```
 
@@ -74,6 +77,7 @@ build/default/assignments/010_server_client/tetris010_sfml_client
   --port 27015 \
   --name student010 \
   --section 062 \
+  --ai-level 2 \
   --mode multi
 ```
 

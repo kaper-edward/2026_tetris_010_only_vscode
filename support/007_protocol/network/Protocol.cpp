@@ -263,6 +263,9 @@ std::string serialize_client_message(const ClientMessage& message) {
             break;
         case ClientMessageType::Queue:
             out << "QUEUE mode=" << message.mode;
+            if (message.ai_level > 0) {
+                out << " ai_level=" << message.ai_level;
+            }
             break;
         case ClientMessageType::Input:
             out << "INPUT match=" << message.match << " player=" << message.player
