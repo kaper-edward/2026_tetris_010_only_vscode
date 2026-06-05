@@ -14,3 +14,4 @@ option(BUILD_ASSIGNMENT_TESTS "Build private assignment logic tests when present
 set(BUILD_SFML_NETWORK_CLIENT ON CACHE BOOL "Build assignment 010 SFML Network clients" FORCE)
 
 add_subdirectory(assignments/010_server_client)
+add_subdirectory(assignments/011_network_versus)

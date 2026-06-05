@@ -11,6 +11,46 @@ PNU C++ 2026 테트리스 과제 010을 VPL에서 통과한 뒤 실제 Vultr 서
 
 제공 코드에는 SFML TCP transport, 프로토콜/전송 계층, 010 bot client, 010 SFML client가 포함됩니다.
 
+## 2026-06-05 업데이트: 011 Network Versus 클라이언트 추가 (NEW)
+
+`assignments/011_network_versus/`에 **내 보드와 상대 보드를 한 화면에 보여 주는
+대전 클라이언트** 2종이 추가되었습니다. 010 쪽 파일·빌드 타깃은 그대로이므로
+기존 작업에는 영향이 없습니다 — `git pull` 후 다시 빌드만 하면 됩니다.
+학생이 수정해야 하는 파일도 없습니다 (서버와 `versus_snapshot` feature를
+협상해 두 플레이어의 보드를 수신·렌더링하는 제공 코드입니다).
+
+| 타깃 | 설명 |
+|---|---|
+| `tetris011_sfml_versus_client` | SFML 그래픽 대전 클라이언트 (기본 빌드에 포함) |
+| `tetris011_ncurses_versus_client` | 터미널(ncurses) 대전 클라이언트 — 옵션 빌드, Linux/macOS |
+
+```bash
+# SFML 대전 클라이언트 (기본 멀티 대기열: 다른 학생과 매칭, 5초 내 상대가 없으면 서버 AI 투입)
+./build/default/assignments/011_network_versus/tetris011_sfml_versus_client \
+  --host tetris.leafmill.com --port 27015 \
+  --name 본인이름 --section 062
+
+# 서버 AI와 바로 1:1 대결 (--ai-level 1|2|3)
+./build/default/assignments/011_network_versus/tetris011_sfml_versus_client \
+  --host tetris.leafmill.com --port 27015 \
+  --name 본인이름 --section 062 --solo --ai-level 2
+```
+
+ncurses 버전은 curses 헤더가 필요하며(`sudo apt install -y libncurses-dev`)
+아래처럼 옵션을 켜고 다시 빌드합니다.
+
+```bash
+cmake --preset default -DBUILD_NCURSES_VERSUS_CLIENT=ON
+cmake --build build/default --parallel
+./build/default/assignments/011_network_versus/tetris011_ncurses_versus_client \
+  --host tetris.leafmill.com --port 27015 --name 본인이름 --section 062 --solo
+```
+
+조작키는 동일합니다: ← → 이동, ↓ 소프트드롭, ↑ 회전, Space 하드드롭, Q/Esc 종료.
+옵션도 010 클라이언트와 동일합니다 (`--section 061|062`, `--ai-level 1|2|3`,
+`--solo`/`--mode multi`, SFML은 `--font`). 서버 주소 `tetris.leafmill.com`은
+기존 IP `158.247.241.98`과 같은 서버입니다.
+
 ## Quick Start
 
 ```bash
