@@ -96,7 +96,7 @@ private:
     tetris::protocol::PlayerId player_id_ = 0;
     tetris::protocol::PlayerId winner_ = 0;
     tetris::protocol::Tick latest_tick_ = 0;
-    int tick_rate_ = 20;
+    int tick_rate_ = 10;
     int protocol_version_ = 1;
     bool has_protocol_version_ = false;
     int next_seq_ = 1;
