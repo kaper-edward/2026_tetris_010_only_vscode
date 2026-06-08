@@ -1,6 +1,6 @@
 #include "SfmlTcpTransport.hpp"
 
-#include <SFML/Network/Dns.hpp>
+#include <SFML/Network/IpAddress.hpp>
 #include <SFML/System/Time.hpp>
 
 namespace tetris::net {
@@ -11,13 +11,13 @@ SfmlTcpTransport::SfmlTcpTransport() : socket_(std::make_unique<sf::TcpSocket>()
 
 bool SfmlTcpTransport::connect(const std::string& host, unsigned short port, int timeout_ms) {
     socket_->setBlocking(true);
-    const auto addresses = sf::Dns::resolve(host);
-    if (!addresses || addresses->empty()) {
+    const auto address = sf::IpAddress::resolve(host);
+    if (!address) {
         socket_->setBlocking(false);
         disconnected_ = true;
         return false;
     }
-    const sf::Socket::Status status = socket_->connect(addresses->front(), port, sf::milliseconds(timeout_ms));
+    const sf::Socket::Status status = socket_->connect(*address, port, sf::milliseconds(timeout_ms));
     socket_->setBlocking(false);
     disconnected_ = status != sf::Socket::Status::Done;
     return !disconnected_;

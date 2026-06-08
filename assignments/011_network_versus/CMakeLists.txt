@@ -22,6 +22,8 @@ target_include_directories(tetris011_view PUBLIC
 target_link_libraries(tetris011_view PUBLIC tetris010_client)
 
 if(BUILD_SFML_NETWORK_CLIENT)
+    include(${CMAKE_SOURCE_DIR}/cmake/SfmlSetup.cmake)
+
     add_library(tetris011_sfml_renderer adapters/sfml/SfmlVersusRenderer.cpp)
     target_include_directories(tetris011_sfml_renderer PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/adapters/sfml
@@ -30,6 +32,13 @@ if(BUILD_SFML_NETWORK_CLIENT)
 
     add_executable(tetris011_sfml_versus_client client/main_sfml_versus_client.cpp)
     target_link_libraries(tetris011_sfml_versus_client PRIVATE tetris010_sfml_tcp tetris011_sfml_renderer)
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/assets")
+        add_custom_command(TARGET tetris011_sfml_versus_client POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${CMAKE_CURRENT_SOURCE_DIR}/assets
+                $<TARGET_FILE_DIR:tetris011_sfml_versus_client>/assets
+        )
+    endif()
 endif()
 
 if(BUILD_NCURSES_VERSUS_CLIENT)

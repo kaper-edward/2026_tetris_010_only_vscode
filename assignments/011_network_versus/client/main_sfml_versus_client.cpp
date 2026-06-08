@@ -9,6 +9,7 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include <filesystem>
 #include <iostream>
 #include <memory>
 #include <optional>
@@ -31,8 +32,9 @@ struct Args {
     int connect_timeout_ms = 2000;
 };
 
-std::string default_font_path() {
-    return "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf";
+std::string default_font_path(const char* argv0) {
+    const auto executable = std::filesystem::absolute(argv0);
+    return (executable.parent_path() / "assets" / "fonts" / "PressStart2P-Regular.ttf").string();
 }
 
 Args parse_args(int argc, char** argv) {
@@ -116,7 +118,7 @@ int main(int argc, char** argv) {
         std::cerr << "invalid --ai-level: " << args.ai_level << " (expected 1..3)\n";
         return 2;
     }
-    const std::string font_path = args.font_path.value_or(default_font_path());
+    const std::string font_path = args.font_path.value_or(default_font_path(argv[0]));
 
     sf::RenderWindow window(sf::VideoMode({1600, 900}), "2026 Tetris Network Versus");
     window.setFramerateLimit(60);

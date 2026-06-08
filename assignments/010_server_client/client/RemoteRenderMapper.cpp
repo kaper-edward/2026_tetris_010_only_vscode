@@ -10,7 +10,7 @@ RenderSnapshot make_render_snapshot_for_remote_game(const tetris::protocol::Remo
         row = "..........";
     }
     snapshot.running = false;
-    snapshot.status_text = "TODO 010: paste your VPL-passed RemoteRenderMapper.cpp implementation";
+    snapshot.status_text = "TODO 009: paste your VPL-passed RemoteRenderMapper.cpp implementation";
     return snapshot;
 }
 

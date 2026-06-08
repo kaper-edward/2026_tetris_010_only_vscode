@@ -46,5 +46,5 @@ tetris::render::RenderSnapshot NetworkGameApp::makeCurrentRenderSnapshot() const
 }
 
 std::string NetworkGameApp::statusText() const {
-    return "TODO 010: paste your VPL-passed NetworkGameApp.cpp implementation";
+    return "TODO 009: paste your VPL-passed NetworkGameApp.cpp implementation";
 }

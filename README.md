@@ -1,23 +1,32 @@
-# 2026 C++ Tetris 010 VSCode Network Client
+# 2026 C++ Tetris 009/010 VSCode Network Client
 
-PNU C++ 2026 테트리스 과제 010을 VPL에서 통과한 뒤 실제 Vultr 서버에 접속해 테스트하기 위한 VSCode/CMake 프로젝트입니다.
+![C++23](https://img.shields.io/badge/C%2B%2B-23-00599C?logo=cplusplus&logoColor=white)
+![CMake](https://img.shields.io/badge/build-CMake-064F8C?logo=cmake&logoColor=white)
+![SFML](https://img.shields.io/badge/client-SFML-8CC445)
 
-이 저장소는 정답 저장소가 아닙니다. 아래 두 파일은 컴파일용 TODO 스텁으로 남겨 두었습니다. 학생은 본인이 VPL에서 통과시킨 구현을 붙여 넣은 뒤 서버에 접속해서 화면 테스트를 합니다.
+PNU C++ 2026 테트리스 학생 배포 과제 009/010을 VPL에서 통과한 뒤 실제 Vultr 서버에 접속해 테스트하기 위한 VSCode/CMake 프로젝트입니다.
 
-| 과제 | 학생 구현 파일 |
-|---|---|
-| 010 | `assignments/010_server_client/client/RemoteRenderMapper.cpp` |
-| 010 | `assignments/010_server_client/client/NetworkGameApp.cpp` |
+이 저장소는 정답 저장소가 아닙니다. 아래 학생 구현 파일은 컴파일용 TODO 스텁으로 남겨 두었습니다. 학생은 본인이 VPL에서 통과시킨 구현을 붙여 넣은 뒤 서버에 접속해서 화면 테스트를 합니다.
 
-제공 코드에는 SFML TCP transport, 프로토콜/전송 계층, 010 bot client, 010 SFML client가 포함됩니다.
+| 학생 배포 과제 | 내부 디렉터리 | 학생 구현 파일 |
+|---|---|---|
+| 009 | `assignments/010_server_client` | `client/RemoteRenderMapper.cpp` |
+| 009 | `assignments/010_server_client` | `client/NetworkGameApp.cpp` |
+| 010 | `assignments/011_network_versus` | `core/TetrominoPreview.cpp` |
+| 010 | `assignments/011_network_versus` | `client/VersusViewMapper.cpp` |
 
-## 2026-06-05 업데이트: 011 Network Versus 클라이언트 추가 (NEW)
+제공 코드에는 SFML TCP transport, 프로토콜/전송 계층, 학생 과제 009용 bot/SFML client와 학생 과제 010용 대전 view client가 포함됩니다. 내부 디렉터리 이름은 기존 빌드 번호를 따라 010/011로 유지되어 있습니다.
+
+## 학생 과제 010 / 내부 011 Network Versus 클라이언트
 
 `assignments/011_network_versus/`에 **내 보드와 상대 보드를 한 화면에 보여 주는
-대전 클라이언트** 2종이 추가되었습니다. 010 쪽 파일·빌드 타깃은 그대로이므로
+대전 클라이언트** 2종이 추가되었습니다. 학생 과제 009(내부 010) 쪽 파일·빌드 타깃은 그대로이므로
 기존 작업에는 영향이 없습니다 — `git pull` 후 다시 빌드만 하면 됩니다.
-학생이 수정해야 하는 파일도 없습니다 (서버와 `versus_snapshot` feature를
-협상해 두 플레이어의 보드를 수신·렌더링하는 제공 코드입니다).
+서버 접속용 클라이언트와 렌더러는 제공 코드입니다. 학생 과제 010에서 구현 대상인 mapper 파일은 위 표의 `TetrominoPreview.cpp`, `VersusViewMapper.cpp`입니다.
+
+![학생 과제 010 versus client preview](media/versus-client.gif)
+
+위 미리보기는 학생 과제 010 대전 클라이언트(`tetris011_sfml_versus_client`)가 이 배포본에서 빌드되어 실행되는 화면입니다. 학생 구현 파일을 VPL 통과 코드로 교체하면 서버의 `VERSUS_SNAPSHOT`을 받아 양쪽 보드, 점수, 다음 블록, Top 5 패널이 채워집니다.
 
 | 타깃 | 설명 |
 |---|---|
@@ -47,7 +56,7 @@ cmake --build build/default --parallel
 ```
 
 조작키는 동일합니다: ← → 이동, ↓ 소프트드롭, ↑ 회전, Space 하드드롭, Q/Esc 종료.
-옵션도 010 클라이언트와 동일합니다 (`--section 061|062`, `--ai-level 1|2|3`,
+옵션도 학생 과제 009용 SFML 클라이언트와 동일합니다 (`--section 061|062`, `--ai-level 1|2|3`,
 `--solo`/`--mode multi`, SFML은 `--font`). 서버 주소 `tetris.leafmill.com`은
 기존 IP `158.247.241.98`과 같은 서버입니다.
 
@@ -95,9 +104,9 @@ build/default/assignments/010_server_client/tetris010_sfml_client
   --timeout-ms 0
 ```
 
-## 010 SFML Client
+## 학생 과제 009 / 내부 010 SFML Client
 
-010 VPL 통과 후 `RemoteRenderMapper.cpp`, `NetworkGameApp.cpp`를 본인 구현으로 교체하고 실행합니다.
+학생 과제 009 VPL 통과 후 `RemoteRenderMapper.cpp`, `NetworkGameApp.cpp`를 본인 구현으로 교체하고 실행합니다.
 
 ```bash
 ./build/default/assignments/010_server_client/tetris010_sfml_client \
@@ -144,7 +153,8 @@ sudo apt install -y cmake g++ ninja-build libx11-dev libxrandr-dev libxcursor-de
 ├── scripts/self_test.sh
 ├── support/
 └── assignments/
-    └── 010_server_client/
+    ├── 010_server_client/      # 학생 배포 과제 009
+    └── 011_network_versus/     # 학생 배포 과제 010
 ```
 
-`support/`에는 010 서버 클라이언트를 빌드하기 위한 protocol, transport, renderer 지원 코드가 들어 있습니다. 학생이 서버 테스트를 위해 수정해야 하는 파일은 위 표의 두 파일뿐입니다.
+`support/`에는 서버 클라이언트를 빌드하기 위한 protocol, transport, renderer 지원 코드가 들어 있습니다. 학생이 서버 테스트를 위해 수정해야 하는 파일은 위 표의 학생 구현 파일뿐입니다.

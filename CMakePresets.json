@@ -22,7 +22,6 @@
       "displayName": "010 SFML Network client (Windows MSYS2 UCRT64)",
       "inherits": "_base",
       "cacheVariables": {
-        "CMAKE_C_COMPILER": "C:/msys64/ucrt64/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "C:/msys64/ucrt64/bin/g++.exe"
       },
       "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows" }
